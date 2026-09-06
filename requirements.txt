@@ -1,0 +1,6 @@
+Django>=5.2,<7
+djangorestframework>=3.16,<4
+django-cors-headers>=4.7,<5
+pypdf>=5.0,<7
+dj-database-url>=2.3,<3
+psycopg[binary]>=3.2,<4
