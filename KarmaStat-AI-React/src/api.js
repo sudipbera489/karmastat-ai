@@ -1,4 +1,4 @@
-const API_BASE_URL = import.meta.env.VITE_API_URL || "/api";
+const API_BASE_URL = (import.meta.env.VITE_API_URL || "/api").replace(/\/$/, "");
 
 function getCookie(name) {
     return document.cookie
@@ -11,7 +11,9 @@ function getCookie(name) {
 async function request(path, options = {}) {
     const csrfToken = getCookie("csrftoken");
     const isFormData = options.body instanceof FormData;
-    const response = await fetch(`${API_BASE_URL}${path}`, {
+    let response;
+    try {
+        response = await fetch(`${API_BASE_URL}${path}`, {
         headers: {
             ...(isFormData ? {} : { "Content-Type": "application/json" }),
             ...(csrfToken ? { "X-CSRFToken": csrfToken } : {}),
@@ -19,7 +21,10 @@ async function request(path, options = {}) {
         },
         credentials: "include",
         ...options,
-    });
+        });
+    } catch {
+        throw new Error("Cannot reach the KarmaStat API. Start Django locally or set VITE_API_URL to your deployed backend URL.");
+    }
     const data = await response.json().catch(() => ({}));
     if (!response.ok) {
         const error = new Error(data.message || "The KarmaStat API is unavailable.");

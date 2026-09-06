@@ -4,7 +4,7 @@ Deploy this repository as two Vercel projects.
 
 ## Backend
 
-1. Create a Vercel project from this repository.
+1. Create a separate Vercel project from this repository for the backend.
 2. Set the project root to the repository root.
 3. Add these environment variables:
    - `DJANGO_SECRET_KEY`: a long random secret
@@ -25,12 +25,15 @@ The backend health check is `https://your-backend.vercel.app/api/test/`.
 
 ## Frontend
 
-1. Create a second Vercel project from the same repository.
+1. Create a second Vercel project from the same repository for the frontend.
 2. Set the project root to `KarmaStat-AI-React`.
 3. Set the environment variable:
-   - `VITE_API_URL`: `https://your-backend.vercel.app/api`
+   - `VITE_API_URL`: `https://your-backend.vercel.app/api` (the backend URL, not `karmastat-ai.vercel.app`)
 4. Build command: `npm run build`
 5. Output directory: `dist`
 6. Deploy.
+
+For local development keep `VITE_API_URL=/api`; `vite.config.js` proxies it to `http://127.0.0.1:8000`.
+For Vercel, set `VITE_API_URL` to the separate backend project URL and redeploy. Vercel does not use the local Vite proxy.
 
 Do not use SQLite in production on Vercel. It is local/ephemeral; use PostgreSQL so users, profiles, quizzes, and analysis persist.
