@@ -13,7 +13,7 @@ Deploy this repository as two Vercel projects.
    - `DATABASE_URL`: a hosted PostgreSQL connection string (Neon, Supabase, or Vercel Postgres)
    - `CORS_ALLOWED_ORIGINS`: the frontend URL, for example `https://karmastat-ai.vercel.app`
    - `CSRF_TRUSTED_ORIGINS`: the same frontend URL
-4. Deploy. The Django API is exposed through `api/index.py`.
+4. Deploy. The Django API is exposed through the existing backend app at `backend/karmastat/api/index.py`.
 5. Run migrations against the hosted database from the local project:
 
 ```powershell
